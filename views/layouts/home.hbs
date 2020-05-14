@@ -1,0 +1,14 @@
+<h1>Add a todo item:</h1>
+<form action="/" method="post">
+    <input type="text" name="item" placeholder="todo item"/>
+    <input type="text" name="city" placeholder="where"/>
+    <input type="text" name="minTemp" placeholder="min temp"/>
+    <input type="submit" value="Submit">
+</form>
+
+<h1>TODO Items on your List</h1>
+<ul>
+    {{#each todo}}
+        <li>You have to {{item}} in {{city}} when it is above {{minTemp}} degrees.</li>
+    {{/each}}
+</ul>
