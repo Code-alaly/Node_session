@@ -25,46 +25,26 @@ app.get('/', (req, res) => {
     // console.log('==================')
     // console.log(req.session.id)
     // console.log('==================')
-    res.send(null)
+    res.render('home.hbs', req.session)
 })
 
+//here app is posting something, taking request and response, for whenever there is a
+// submit button? if there is something in tod-o, then it gets pushed onto what's already there,
+// otherwise it becomes the start of the new list.
+
+// when the app gets any post method, it takes the req, waits for the response,
+// and then does something with the response
+app.post('/', (req, res) => {
+    if (req.session.todo)
+        req.session.todo.push(req.body)
+    else
+        req.session.todo = [req.body]
+    // so it re renders on the post, it doesn't do another get every time something happens
+    res.render('home', req.session)
+})
+
+// when the app gets the first ready signal for the page.
 app.listen(app.get('port'), () => {
     console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
 })
 
-
-
-//
-//
-// var express = require('express');
-//
-// var app = express();
-//
-// app.set('port', 54316);
-//
-// app.get('/',function(req,res){
-//     res.type('text/plain');
-//     res.send('Welcome to the main page!');
-// });
-//
-// app.get('/other-page',function(req,res){
-//     res.type('text/plain');
-//     res.send('Welcome to the other page!');
-// });
-//
-// app.use(function(req,res){
-//     res.type('text/plain');
-//     res.status(404);
-//     res.send('404 - Not Found');
-// });
-//
-// app.use(function(err, req, res, next){
-//     console.error(err.stack);
-//     res.type('plain/text');
-//     res.status(500);
-//     res.send('500 - Server Error');
-// });
-//
-// app.listen(app.get('port'), function(){
-//     console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
-// });
