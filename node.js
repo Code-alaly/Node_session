@@ -10,6 +10,7 @@ app.set('port', 54316);
 app.engine('hbs', exphbs({extname: '.hbs'}))
 app.set('view engine', 'hbs')
 
+
 app.use(session({secret: 'asecret'}))
 
 app.use(express.json())
@@ -25,15 +26,10 @@ app.get('/', (req, res) => {
     // console.log('==================')
     // console.log(req.session.id)
     // console.log('==================')
-    res.render('home.hbs', req.session)
+    res.render('home', req.session)
 })
 
-//here app is posting something, taking request and response, for whenever there is a
-// submit button? if there is something in tod-o, then it gets pushed onto what's already there,
-// otherwise it becomes the start of the new list.
 
-// when the app gets any post method, it takes the req, waits for the response,
-// and then does something with the response
 app.post('/', (req, res) => {
     if (req.session.todo)
         req.session.todo.push(req.body)
