@@ -9,7 +9,7 @@ app.set('port', 54316);
 //
 app.engine('hbs', exphbs({extname: '.hbs'}))
 app.set('view engine', 'hbs')
-
+// here's some comments of some different things and changes
 
 app.use(session({secret: 'asecret'}))
 
