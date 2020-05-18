@@ -19,9 +19,9 @@ app.use(express.urlencoded({extended: false}))
 // every time it gets a request, will check the session id to see some unique identifiers
 app.get('/', (req, res) => {
     // console.log('==================')
-    // console.log('==================')
-    // console.log(req.sessionStore)
-    // console.log('==================')
+    console.log('==================')
+    console.log(req.sessionStore)
+    console.log('==================')
     // console.log(req.session)
     // console.log('==================')
     // console.log(req.session.id)
@@ -35,6 +35,9 @@ app.post('/', (req, res) => {
         req.session.todo.push(req.body)
     else
         req.session.todo = [req.body]
+    console.log('==================')
+    console.log(req.sessionStore)
+    console.log('==================')
     // so it re renders on the post, it doesn't do another get every time something happens
     res.render('home', req.session)
 })
