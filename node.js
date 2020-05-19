@@ -1,9 +1,28 @@
 const express = require('express')
 const exphbs = require('express-handlebars')
 const session = require('express-session')
+var bodyParser = require('body-parser');
 
 function recieved(req) {
     req.session.request = req.method + " Request Recieved"
+}
+
+function isEmpty(obj) {
+    return Object.keys(obj).length === 0;
+}
+
+function create_table(req, placement) {
+
+    var myParams = {};
+    for (var p in req) {
+        myParams[p] = req[p]
+    }
+
+    req.session.qParams = myParams
+}
+
+function setQParams(req, input, qParams) {
+    input = qParams
 }
 
 // create our app obj
@@ -11,6 +30,9 @@ const app = express()
 // set the port to the port you are communicating with
 app.set('port', 54316);
 //
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 app.engine('hbs', exphbs({extname: '.hbs'}))
 app.set('view engine', 'hbs')
 
@@ -23,29 +45,15 @@ app.use(express.urlencoded({extended: false}))
 app.get('/', (req, res) => {
     // also puts into the header what kind of request it was.
     recieved(req)
-    var qParams = {};
-    for (var p in req.query) {
-        qParams[p] = req.query[p]
-    }
-
-    req.session.qParams = qParams
+    create_table(req.query, req.session)
     res.render('home', req.session)
-
 })
 
-// app.get('/get-loopback',function(req,res){
-//
-// });
-
-//here app is posting something, taking request and response, for whenever there is a
-// submit button? if there is something in tod-o, then it gets pushed onto what's already there,
-// otherwise it becomes the start of the new list.
-
-// when the app gets any post method, it takes the req, waits for the response,
-// and then does something with the response
 app.post('/', (req, res) => {
     // that puts into the header what kind of request that it was.
     recieved(req)
+    console.log(req.body)
+    setQParams(req, create_table(req.query, req.body))
     // so it re renders on the post, it doesn't do another get every time something happens
     res.render('home', req.session)
 })

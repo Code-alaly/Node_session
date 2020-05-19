@@ -1,21 +1,16 @@
-<h1>Add a todo item:</h1>
-<form action="/" method="post">
-    <input type="text" name="item" placeholder="todo item"/>
-    <input type="text" name="city" placeholder="where"/>
-    <input type="text" name="minTemp" placeholder="min temp"/>
-    <input type="submit" value="Submit">
-</form>
+
 
 <h1>{{request}}</h1>
 <!--<h1>{{qParams}}</h1>-->
-<table>
-    <tbody>
-    {{#each qParams}}
-        <tr>
+
+    <table>
+        <tbody>
+        {{#each qParams}}
+            <tr>
                 <td>{{@key}} </td>
                 <td>{{this}}</td>
-        </tr>
-    {{/each}}
-    </tbody>
+            </tr>
+        {{/each}}
+        </tbody>
 
-</table>
+    </table>
