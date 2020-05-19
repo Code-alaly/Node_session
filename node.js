@@ -2,6 +2,10 @@ const express = require('express')
 const exphbs = require('express-handlebars')
 const session = require('express-session')
 
+function recieved(req) {
+    req.session.request = req.method + " Request Recieved"
+}
+
 // create our app obj
 const app = express()
 // set the port to the port you are communicating with
@@ -17,16 +21,24 @@ app.use(express.urlencoded({extended: false}))
 
 // every time it gets a request, will check the session id to see some unique identifiers
 app.get('/', (req, res) => {
-    // console.log('==================')
-    // console.log('==================')
-    // console.log(req.sessionStore)
-    // console.log('==================')
-    // console.log(req.session)
-    // console.log('==================')
-    // console.log(req.session.id)
-    // console.log('==================')
-    res.render('home.hbs', req.session)
+    // also puts into the header what kind of request it was.
+    recieved(req)
+    var qParams = "";
+    for (var p in req.query){
+        qParams += "The name " + p + " contains the value " + req.query[p] + ", ";
+    }
+    qParams = qParams.substring(0,qParams.lastIndexOf(','));
+    qParams += '.';
+    var context = {};
+    context.dataList = qParams;
+    req.session.qParams = context.dataList
+    res.render('home', req.session)
+
 })
+
+// app.get('/get-loopback',function(req,res){
+//
+// });
 
 //here app is posting something, taking request and response, for whenever there is a
 // submit button? if there is something in tod-o, then it gets pushed onto what's already there,
@@ -35,10 +47,8 @@ app.get('/', (req, res) => {
 // when the app gets any post method, it takes the req, waits for the response,
 // and then does something with the response
 app.post('/', (req, res) => {
-    if (req.session.todo)
-        req.session.todo.push(req.body)
-    else
-        req.session.todo = [req.body]
+    // that puts into the header what kind of request that it was.
+    recieved(req)
     // so it re renders on the post, it doesn't do another get every time something happens
     res.render('home', req.session)
 })

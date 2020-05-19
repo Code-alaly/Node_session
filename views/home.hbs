@@ -6,7 +6,8 @@
     <input type="submit" value="Submit">
 </form>
 
-<h1>TODO Items on your List</h1>
+<h1>{{request}}</h1>
+<h1>{{qParams}}</h1>
 <ul>
     {{#each todo}}
         <li>You have to {{item}} in {{city}} when it is above {{minTemp}} degrees.</li>
