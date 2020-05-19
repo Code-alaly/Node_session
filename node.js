@@ -23,15 +23,12 @@ app.use(express.urlencoded({extended: false}))
 app.get('/', (req, res) => {
     // also puts into the header what kind of request it was.
     recieved(req)
-    var qParams = "";
-    for (var p in req.query){
-        qParams += "The name " + p + " contains the value " + req.query[p] + ", ";
+    var qParams = {};
+    for (var p in req.query) {
+        qParams[p] = req.query[p]
     }
-    qParams = qParams.substring(0,qParams.lastIndexOf(','));
-    qParams += '.';
-    var context = {};
-    context.dataList = qParams;
-    req.session.qParams = context.dataList
+
+    req.session.qParams = qParams
     res.render('home', req.session)
 
 })

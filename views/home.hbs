@@ -7,9 +7,15 @@
 </form>
 
 <h1>{{request}}</h1>
-<h1>{{qParams}}</h1>
-<ul>
-    {{#each todo}}
-        <li>You have to {{item}} in {{city}} when it is above {{minTemp}} degrees.</li>
+<!--<h1>{{qParams}}</h1>-->
+<table>
+    <tbody>
+    {{#each qParams}}
+        <tr>
+                <td>{{@key}} </td>
+                <td>{{this}}</td>
+        </tr>
     {{/each}}
-</ul>
+    </tbody>
+
+</table>
